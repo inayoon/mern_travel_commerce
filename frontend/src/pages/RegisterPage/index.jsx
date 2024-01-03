@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../../store/thunkFunctions";
+import { registerUser } from "../../store/thunkFunctions.js";
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
@@ -21,6 +21,7 @@ export default function RegisterPage() {
     };
     dispatch(registerUser(body));
     reset();
+    // navigate('/login');
   };
 
   const userEmail = {

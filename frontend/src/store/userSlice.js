@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser } from "./thunkFunctions";
+import { registerUser } from "./thunkFunctions.js";
+import { toast } from "react-toastify";
 
 const initialState = {
   userData: {
@@ -17,9 +18,6 @@ const initialState = {
 const userSlice = createSlice({
   name: "user",
   initialState,
-  // reducers를 사용하면 toolkit이 action creator를 자동으로 만들어줌
-  // 하지만 비동기적 작업들은 action creator를 자동으로 만들지 못하므로
-  // extraReducers 안에서 정의한다
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -28,10 +26,12 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state) => {
         state.isLoading = false;
+        toast.info("Sign Up Successfully");
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+        toast.error(action.payload);
       });
   },
 });
