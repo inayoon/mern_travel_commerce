@@ -1,4 +1,4 @@
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
@@ -7,6 +7,9 @@ import Navbar from "./layout/NavBar";
 import Footer from "./layout/Footer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { authUser } from "./store/thunkFunctions";
 
 function Layout() {
   return (
@@ -27,6 +30,14 @@ function Layout() {
 }
 
 function App() {
+  const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.user?.isAuth);
+  const { pathname } = useLocation();
+  useEffect(() => {
+    if (isAuth) {
+      dispatch(authUser());
+    }
+  }, [dispatch, pathname, isAuth]);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
