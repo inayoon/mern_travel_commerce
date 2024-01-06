@@ -2,14 +2,16 @@ const { default: mongoose } = require("mongoose");
 
 const productSchema = mongoose.Schema({
   writer: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
   title: {
     type: String,
     maxLength: 30,
   },
-  description: String,
+  description: {
+    type: String,
+  },
   price: {
     type: Number,
     default: 0,

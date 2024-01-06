@@ -20,6 +20,7 @@ mongoose
   });
 
 app.use("/users", require("./routes/users"));
+app.use("/products", require("./routes/products"));
 
 //절대 경로를 사용하기 위해서 path 를 씀
 // ../upload로 하는 이유는 ../이 없을 경우 src폴더안에 uploads를 찾게됨
