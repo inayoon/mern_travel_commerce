@@ -34,10 +34,26 @@ export default function LandingPage() {
     };
     try {
       const response = await axiosInstance.get("/products", { params });
-      setProducts(response.data.products);
+      if (loadMore) {
+        setProducts([...products, ...response.data.products]);
+      } else {
+        setProducts(response.data.products);
+      }
+      setHasMore(response.data.hasMore);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleLoadMore = () => {
+    const body = {
+      skip: skip + limit,
+      limit,
+      loadMore: true,
+      filters,
+    };
+    fetchProducts(body);
+    setSkip(skip + limit);
   };
 
   return (
@@ -69,7 +85,10 @@ export default function LandingPage() {
       {/* Load More */}
       {hasMore && (
         <div className="flex justify-center mt-4">
-          <button className="px-4 py-2 mt-5 text-white bg-black rounded-md hover:bg-gray-500">
+          <button
+            className="px-4 py-2 mt-5 text-white bg-black rounded-md hover:bg-gray-500"
+            onClick={handleLoadMore}
+          >
             More
           </button>
         </div>
