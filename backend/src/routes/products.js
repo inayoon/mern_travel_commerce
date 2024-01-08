@@ -33,7 +33,12 @@ router.get("/", async (req, res, next) => {
   let findArgs = {};
   for (let key in req.query.filters) {
     if (req.query.filters[key].length > 0) {
-      findArgs[key] = req.query.filters[key];
+      if (key === "prices") {
+        $gte: req.query.filters[key][0];
+        $lte: req.query.filters[key][1];
+      } else {
+        findArgs[key] = req.query.filters[key];
+      }
     }
   }
   try {

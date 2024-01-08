@@ -57,8 +57,8 @@ const prices = [
   },
   {
     _id: 5,
-    name: "$300 ~",
-    array: [300, 150000],
+    name: "more than $300",
+    array: [300, 500],
   },
 ];
 
