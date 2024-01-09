@@ -8,6 +8,7 @@ import { continents, prices } from "../../utils/filterData";
 
 export default function LandingPage() {
   const limit = 4;
+  const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState([]);
   const [skip, setSkip] = useState(0);
   const [hasMore, setHasMore] = useState(false);
@@ -52,6 +53,7 @@ export default function LandingPage() {
       limit,
       loadMore: true,
       filters,
+      searchTerm,
     };
     fetchProducts(body);
     setSkip(skip + limit);
@@ -83,9 +85,22 @@ export default function LandingPage() {
       skip: 0,
       limit,
       filters,
+      searchTerm,
     };
     fetchProducts(body);
     setSkip(0);
+  };
+
+  const handleSearchTerm = (e) => {
+    const body = {
+      skip: 0,
+      limit,
+      filters,
+      searchTerm: e.target.value,
+    };
+    setSkip(0);
+    setSearchTerm(e.target.value);
+    fetchProducts(body);
   };
 
   return (
@@ -111,8 +126,8 @@ export default function LandingPage() {
         </div>
       </div>
       {/* Search */}
-      <div className="flex justify-end">
-        <SearchInput />
+      <div className="flex justify-end mb-3">
+        <SearchInput searchTerm={searchTerm} onSearch={handleSearchTerm} />
       </div>
 
       {/* Card */}
