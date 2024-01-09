@@ -44,7 +44,7 @@ export default function UploadProductPage() {
     e.preventDefault();
 
     const body = {
-      writer: userData._id,
+      writer: userData.id,
       ...product,
     };
     try {
