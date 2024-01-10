@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCartItems } from "../../store/thunkFunctions";
+import { getCartItems, removeCartItem } from "../../store/thunkFunctions";
+import CartTable from "./Section/CartTable";
 
 export default function CartPage() {
   const dispatch = useDispatch();
@@ -30,6 +31,10 @@ export default function CartPage() {
     cartItems.map((item) => (total += item.price * item.quantity));
     setTotal(total);
   };
+
+  const handleRemoveCartItem = (productId) => {
+    dispatch(removeCartItem(productId));
+  };
   return (
     <section>
       <div className="text-center m-7">
@@ -37,6 +42,10 @@ export default function CartPage() {
       </div>
       {cartDetail?.length > 0 ? (
         <>
+          <CartTable
+            products={cartDetail}
+            onRemoveItem={handleRemoveCartItem}
+          />
           <div className="mt-10">
             <p>
               <span className="font-bold">Total: </span>${total}
