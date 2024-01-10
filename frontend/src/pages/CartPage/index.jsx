@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCartItems, removeCartItem } from "../../store/thunkFunctions";
+import {
+  getCartItems,
+  payProducts,
+  removeCartItem,
+} from "../../store/thunkFunctions";
 import CartTable from "./Section/CartTable";
 
 export default function CartPage() {
@@ -35,6 +39,10 @@ export default function CartPage() {
   const handleRemoveCartItem = (productId) => {
     dispatch(removeCartItem(productId));
   };
+
+  const handlePaymentClick = () => {
+    dispatch(payProducts(cartDetail));
+  };
   return (
     <section>
       <div className="text-center m-7">
@@ -50,7 +58,10 @@ export default function CartPage() {
             <p>
               <span className="font-bold">Total: </span>${total}
             </p>
-            <button className="px-4 py-2 mt-5 text-white bg-black rounded-md hover:bg-gray-500">
+            <button
+              onClick={handlePaymentClick}
+              className="px-4 py-2 mt-5 text-white bg-black rounded-md hover:bg-gray-500"
+            >
               Pay Now
             </button>
           </div>
