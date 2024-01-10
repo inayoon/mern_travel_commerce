@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  addToCart,
   authUser,
   loginUser,
   logoutUser,
@@ -82,6 +83,20 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
         localStorage.removeItem("accessToken");
+      })
+
+      .addCase(addToCart.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addToCart.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.userData.cart = action.payload;
+        toast.info("Added to cart");
+      })
+      .addCase(addToCart.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        toast.error(action.payload);
       });
   },
 });
